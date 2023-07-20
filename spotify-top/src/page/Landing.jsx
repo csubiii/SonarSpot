@@ -1,5 +1,5 @@
 import React from 'react'
-import { CLIENT_ID, REDIRECT_URI, AUTH_ENDPOINT, RESPONSE_TYPE, SCOPE } from './utils/auth'
+import { CLIENT_ID, REDIRECT_URI, AUTH_ENDPOINT, RESPONSE_TYPE, SCOPE } from '../utils/auth'
 
 
 const Landing = () => {

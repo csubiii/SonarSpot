@@ -21,7 +21,6 @@ export const SpotifyProvider = ({children}) => {
     });
 
     if(data) {
-      console.log(data)
       dispatch({
         type: 'GET_CURRENTUSER',
         payload: data,

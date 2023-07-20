@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import {SpotifyProvider} from './context/SpotifyContext';
 
-import Landing from "./Landing";
-import Home from "./Home";
+import Landing from "./page/Landing";
+import Home from "./page/Home";
 
 const App = () => {
   const [token, setToken] = useState("");
