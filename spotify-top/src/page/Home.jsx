@@ -2,6 +2,7 @@ import React, { useEffect, useContext } from 'react'
 
 import SpotifyContext from '../context/SpotifyContext'
 import CurrentUser from './CurrentUser'
+import TopTracks from './TopTracks'
 
 const Home = ({ logout }) => {
 
@@ -9,8 +10,8 @@ const Home = ({ logout }) => {
 
   return (
     <div>
-      <CurrentUser />
-      <button onClick={logout}>Log out</button>
+      <CurrentUser logout={logout} />
+      <TopTracks />
     </div>
   )
 }
