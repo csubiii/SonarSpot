@@ -1,22 +1,26 @@
-import React, { useEffect, useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import SpotifyContext from "../context/SpotifyContext";
 
+import { TailSpin } from "react-loader-spinner";
+
 const CurrentUser = ({ logout }) => {
-  const { currentUser, getCurrentUser } = useContext(SpotifyContext);
-
-  const token = localStorage.getItem("token");
-
-  useEffect(() => {
-    getCurrentUser(token);
-    console.log(currentUser);
-  }, []);
+  const { currentUser } = useContext(SpotifyContext);
 
   if (!currentUser || !currentUser.images || currentUser.images.length === 0) {
     // Return some placeholder content or loading indicator while waiting for data
-    return <div></div>;
+    return <TailSpin
+    height="40"
+    width="40"
+    color="#f2f"
+    ariaLabel="tail-spin-loading"
+    radius="1"
+    wrapperStyle={{}}
+    wrapperClass=""
+    visible={true}
+  />;
   }
 
-  const { display_name, external_urls, followers } = currentUser;
+  const { display_name, external_urls} = currentUser;
 
   return (
     <div>
