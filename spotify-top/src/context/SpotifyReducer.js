@@ -1,5 +1,11 @@
 const spotifyReducer = (state, action) => {
   switch(action.type) {
+    case 'GET_TOKEN':
+      return {
+        ...state,
+        token: action.payload,
+        loading: false,
+      }
     case 'GET_CURRENTUSER':
       return {
         ...state,
