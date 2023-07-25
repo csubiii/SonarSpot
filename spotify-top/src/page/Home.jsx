@@ -1,7 +1,7 @@
 import React from "react";
 
 import CurrentUser from "./CurrentUser";
-import TopTracks from "./TopTracks";
+import TopTracks from "./UserTopTracks/TopTracks";
 
 const Home = ({ logout }) => {
   return (
