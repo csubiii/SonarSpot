@@ -9,20 +9,22 @@ import Landing from "./page/Landing";
 import Home from "./page/Home";
 
 const App = () => {
-  const { getCurrentUser, getUserTopTracks, getToken, token } = useContext(SpotifyContext);
+  const { getCurrentUser, getUserTopTracks, getToken, token, refreshToken } = useContext(SpotifyContext);
  
   const logout = () => {
     window.localStorage.removeItem("token");
-    window.location.reload()
+    window.localStorage.removeItem("refreshToken");
+    window.location.reload();
   };
-
+console.log(window.localStorage.getItem("refreshToken"))
+console.log("this is the", refreshToken)
   const refreshAccessToken = async () => {
     try {
       const data = querystring.stringify({
         grant_type: 'refresh_token',
-        refresh_token: '',
-        client_id: '',
-        client_secret: '',
+        refresh_token: window.localStorage.getItem("refreshToken"),
+        client_id: 'a85a45a07852417ab856b4d7f10b0010',
+        client_secret: import.meta.env.VITE_CLIENT_SECRET,
       });
 
       const response = await axios.post('https://accounts.spotify.com/api/token', data, {
@@ -33,7 +35,7 @@ const App = () => {
 
       const newAccessToken = response.data.access_token;
       localStorage.setItem("token", newAccessToken); // Store the token in local storage
-      window.location.reload()
+      window.location.reload();
     } catch (error) {
       console.error('Error refreshing token:', error);
     }

@@ -6,6 +6,12 @@ const spotifyReducer = (state, action) => {
         token: action.payload,
         loading: false,
       }
+    case 'GET_REFRESH_TOKEN':
+      return {
+        ...state,
+        token: action.payload,
+        loading: false,
+      }
     case 'GET_CURRENTUSER':
       return {
         ...state,

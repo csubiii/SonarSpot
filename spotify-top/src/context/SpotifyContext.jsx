@@ -10,24 +10,50 @@ export const SpotifyProvider = ({ children }) => {
     currentUser: {},
     userTopTracks: {},
     token: "",
+    refreshToken: "",
   };
 
   const [state, dispatch] = useReducer(spotifyReducer, initialState);
 
-  const getToken = () => {
+  const getRefresh = () => {
+    setLoading();
     const hash = window.location.hash;
+    let refreshToken = window.localStorage.getItem("refreshToken");
+    if (!refreshToken && hash) {
+      refreshToken = hash
+        .substring(1)
+        .split("&")
+        .find((elem) => elem.startsWith("refresh_token"))
+        .split("=")[1];
+
+      window.location.hash = ""
+      window.localStorage.setItem("refreshToken", refreshToken);
+    }
+
+    if (refreshToken) {
+      dispatch({
+        type: "GET_REFRESH_TOKEN",
+        payload: refreshToken,
+      });
+    }
+  };
+
+  const getToken = () => {
+    setLoading();
+    const hash = window.location.hash;
+    getRefresh();
     let token = window.localStorage.getItem("token");
     if (!token && hash) {
       token = hash
-        .substring(1)
-        .split("&")
-        .find((elem) => elem.startsWith("access_token"))
-        .split("=")[1];
-
-      window.location.hash = "";
+      .substring(1)
+      .split("&")
+      .find((elem) => elem.startsWith("access_token"))
+      .split("=")[1];
+      
+      window.location.hash = ""
       window.localStorage.setItem("token", token);
     }
-
+    
     if (token) {
       dispatch({
         type: "GET_TOKEN",
@@ -87,9 +113,11 @@ export const SpotifyProvider = ({ children }) => {
         currentUser: state.currentUser,
         userTopTracks: state.userTopTracks,
         token: state.token,
+        refreshToken: state.refreshToken,
         getCurrentUser,
         getUserTopTracks,
         getToken,
+        getRefresh,
       }}
     >
       {children}
