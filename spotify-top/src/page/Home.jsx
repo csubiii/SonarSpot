@@ -1,13 +1,13 @@
 import React from "react";
 
 import CurrentUser from "./CurrentUser";
-import TopTracks from "./UserTopTracks/TopTracks";
+import TopArtists from "./UserTopTracks/TopArtists";
 
 const Home = ({ logout }) => {
   return (
     <div>
       <CurrentUser logout={logout} />
-      <TopTracks />
+      <TopArtists />
     </div>
   );
 };

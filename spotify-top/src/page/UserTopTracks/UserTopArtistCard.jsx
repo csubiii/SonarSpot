@@ -1,7 +1,7 @@
 import React from 'react'
 import Card from './Card'
 
-const UserTopTracksCard = () => {
+const UserTopArtistsCard = () => {
   return (
     <div>
       <Card />
@@ -9,4 +9,4 @@ const UserTopTracksCard = () => {
   )
 }
 
-export default UserTopTracksCard
+export default UserTopArtistsCard

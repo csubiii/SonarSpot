@@ -9,7 +9,7 @@ const spotifyReducer = (state, action) => {
     case 'GET_REFRESH_TOKEN':
       return {
         ...state,
-        token: action.payload,
+        refreshToken: action.payload,
         loading: false,
       }
     case 'GET_CURRENTUSER':
@@ -18,10 +18,10 @@ const spotifyReducer = (state, action) => {
         currentUser: action.payload,
         loading: false,
       }
-    case 'GET_USERTOPTRACKS':
+    case 'GET_USERTOPARTISTS':
       return {
         ...state,
-        userTopTracks: action.payload,
+        userTopArtists: action.payload,
         loading: false,
       }
       case 'SET_LOADING':

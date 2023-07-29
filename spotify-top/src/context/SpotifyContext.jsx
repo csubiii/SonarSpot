@@ -7,8 +7,8 @@ const SpotifyContext = createContext();
 
 export const SpotifyProvider = ({ children }) => {
   const initialState = {
-    currentUser: {},
-    userTopTracks: {},
+    currentUser: [],
+    userTopArtists: [],
     token: "",
     refreshToken: "",
   };
@@ -82,10 +82,10 @@ export const SpotifyProvider = ({ children }) => {
     }
   };
 
-  const getUserTopTracks = async (token) => {
+  const getUserTopArtists = async (token) => {
     setLoading();
     const { data } = await axios.get(
-      "https://api.spotify.com/v1/me/top/artists",
+      "https://api.spotify.com/v1/me/top/artists?time_range=short_term&limit=10",
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -95,7 +95,7 @@ export const SpotifyProvider = ({ children }) => {
 
     if (data) {
       dispatch({
-        type: "GET_USERTOPTRACKS",
+        type: "GET_USERTOPARTISTS",
         payload: data,
       });
     } else {
@@ -111,11 +111,11 @@ export const SpotifyProvider = ({ children }) => {
     <SpotifyContext.Provider
       value={{
         currentUser: state.currentUser,
-        userTopTracks: state.userTopTracks,
+        userTopArtists: state.userTopArtists,
         token: state.token,
         refreshToken: state.refreshToken,
         getCurrentUser,
-        getUserTopTracks,
+        getUserTopArtists,
         getToken,
         getRefresh,
       }}

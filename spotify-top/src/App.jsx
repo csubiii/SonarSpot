@@ -9,7 +9,7 @@ import Landing from "./page/Landing";
 import Home from "./page/Home";
 
 const App = () => {
-  const { getCurrentUser, getUserTopTracks, getToken, token, refreshToken } = useContext(SpotifyContext);
+  const { getCurrentUser, getUserTopArtists, getToken, token, refreshToken } = useContext(SpotifyContext);
  
   const logout = () => {
     window.localStorage.removeItem("token");
@@ -22,7 +22,7 @@ console.log("this is the", refreshToken)
     try {
       const data = querystring.stringify({
         grant_type: 'refresh_token',
-        refresh_token: window.localStorage.getItem("refreshToken"),
+        refresh_token: refreshToken,
         client_id: 'a85a45a07852417ab856b4d7f10b0010',
         client_secret: import.meta.env.VITE_CLIENT_SECRET,
       });
@@ -48,7 +48,7 @@ console.log("this is the", refreshToken)
       else {
         try {
           await getCurrentUser(token);
-          await getUserTopTracks(token);
+          await getUserTopArtists(token);
         } catch (error) {
           // Handle any errors that might occur during the API calls
           console.error('Error fetching data:', error);
