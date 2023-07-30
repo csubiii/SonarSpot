@@ -1,6 +1,5 @@
 import axios from "axios";
 import { createContext, useReducer } from "react";
-
 import spotifyReducer from "./SpotifyReducer";
 
 const SpotifyContext = createContext();
@@ -26,7 +25,7 @@ export const SpotifyProvider = ({ children }) => {
         .find((elem) => elem.startsWith("refresh_token"))
         .split("=")[1];
 
-      window.location.hash = ""
+      window.location.hash = "";
       window.localStorage.setItem("refreshToken", refreshToken);
     }
 
@@ -45,15 +44,15 @@ export const SpotifyProvider = ({ children }) => {
     let token = window.localStorage.getItem("token");
     if (!token && hash) {
       token = hash
-      .substring(1)
-      .split("&")
-      .find((elem) => elem.startsWith("access_token"))
-      .split("=")[1];
-      
-      window.location.hash = ""
+        .substring(1)
+        .split("&")
+        .find((elem) => elem.startsWith("access_token"))
+        .split("=")[1];
+
+      window.location.hash = "";
       window.localStorage.setItem("token", token);
     }
-    
+
     if (token) {
       dispatch({
         type: "GET_TOKEN",

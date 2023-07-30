@@ -1,7 +1,7 @@
 import React from "react";
 
 import CurrentUser from "./CurrentUser";
-import TopArtists from "./UserTopTracks/TopArtists";
+import TopArtists from "./UserTopArtists/TopArtists";
 
 const Home = ({ logout }) => {
   return (

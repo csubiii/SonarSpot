@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import querystring from 'querystring';
 
+import './app.css'
 
 import SpotifyContext from "./context/SpotifyContext";
 
