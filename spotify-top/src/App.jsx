@@ -10,7 +10,7 @@ import Landing from "./page/Landing";
 import Home from "./page/Home";
 
 const App = () => {
-  const { getCurrentUser, getUserTopArtists, getToken, token, refreshToken } = useContext(SpotifyContext);
+  const { getCurrentUser, getUserTopArtists, getUserTopTracks, getToken, token, refreshToken } = useContext(SpotifyContext);
  
   const logout = () => {
     window.localStorage.removeItem("token");
@@ -50,6 +50,7 @@ console.log("this is the", refreshToken)
         try {
           await getCurrentUser(token);
           await getUserTopArtists(token);
+          await getUserTopTracks(token);
         } catch (error) {
           // Handle any errors that might occur during the API calls
           console.error('Error fetching data:', error);

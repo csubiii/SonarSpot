@@ -53,7 +53,7 @@ const CardItem = memo(({ artist }) => {
         </div>
         <a
           href={artist?.external_urls?.spotify || ""}
-          className={`text-${isLoading ? "transparent" : "gray-300"} text-md font-semibold truncate hover:opacity-50 duration-150 ease-in`}
+          className={`text-${isLoading ? "transparent" : "gray-300"} text-md text-gray-300 font-semibold truncate hover:opacity-50 duration-150 ease-in`}
           target="_blank"
           rel="noopener noreferrer"
         >

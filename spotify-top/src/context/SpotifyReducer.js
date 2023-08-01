@@ -24,6 +24,12 @@ const spotifyReducer = (state, action) => {
         userTopArtists: action.payload,
         loading: false,
       }
+    case 'GET_USERTOPTRACKS':
+      return {
+        ...state,
+        userTopTracks: action.payload,
+        loading: false,
+      }
       case 'SET_LOADING':
         return {
           ...state,
