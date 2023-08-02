@@ -1,11 +1,11 @@
-import React, { useContext } from 'react'
-import SpotifyContext from '../../context/SpotifyContext'
+import React from 'react'
+import Card from './Card'
 
 const UserTopTracksCard = () => {
-  const { userTopTracks } = useContext(SpotifyContext)
-  console.log(userTopTracks)
   return (
-    <div>UserTopTracksCard</div>
+    <div>
+      <Card />
+    </div>
   )
 }
 

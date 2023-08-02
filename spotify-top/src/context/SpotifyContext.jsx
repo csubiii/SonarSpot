@@ -85,7 +85,7 @@ export const SpotifyProvider = ({ children }) => {
   const getUserTopArtists = async (token) => {
     setLoading();
     const { data } = await axios.get(
-      "https://api.spotify.com/v1/me/top/artists?time_range=short_term&limit=5",
+      "https://api.spotify.com/v1/me/top/artists?time_range=short_term&limit=10",
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -108,7 +108,7 @@ export const SpotifyProvider = ({ children }) => {
   const getUserTopTracks = async (token) => {
     setLoading();
     const { data } = await axios.get(
-      "https://api.spotify.com/v1/me/top/tracks?time_range=short_term&limit=10",
+      "https://api.spotify.com/v1/me/top/tracks?time_range=short_term&limit=5",
       {
         headers: {
           Authorization: `Bearer ${token}`,

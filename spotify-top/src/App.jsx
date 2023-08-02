@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, lazy, Suspense } from "react";
 import axios from "axios";
 import querystring from 'querystring';
 
@@ -7,18 +7,20 @@ import './app.css'
 import SpotifyContext from "./context/SpotifyContext";
 
 import Landing from "./page/Landing";
-import Home from "./page/Home";
+
+const Home = lazy(() => import("./page/Home"));
 
 const App = () => {
-  const { getCurrentUser, getUserTopArtists, getUserTopTracks, getToken, token, refreshToken } = useContext(SpotifyContext);
- 
+  const { getCurrentUser, getUserTopArtists, getUserTopTracks, getToken, token } = useContext(SpotifyContext);
+
+  const refreshToken = localStorage.getItem("refreshToken");
+
   const logout = () => {
     window.localStorage.removeItem("token");
     window.localStorage.removeItem("refreshToken");
     window.location.reload();
   };
-console.log(window.localStorage.getItem("refreshToken"))
-console.log("this is the", refreshToken)
+
   const refreshAccessToken = async () => {
     try {
       const data = querystring.stringify({
@@ -43,36 +45,35 @@ console.log("this is the", refreshToken)
   };
 
   useEffect(() => {
-    // Function to fetch data when user is logged in
     const fetchDataWhenLoggedIn = async () => {
-      if (!token) getToken();
-      else {
-        try {
+      try {
+        if (!token) {
+          getToken();
+        } else {
           await getCurrentUser(token);
           await getUserTopArtists(token);
           await getUserTopTracks(token);
-        } catch (error) {
-          // Handle any errors that might occur during the API calls
-          console.error('Error fetching data:', error);
-          refreshAccessToken();
         }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        refreshAccessToken();
       }
     };
 
-    fetchDataWhenLoggedIn(); // Call fetchDataWhenLoggedIn on component mount when the token is available
+    fetchDataWhenLoggedIn();
 
-    const intervalId = setInterval(() => {
-      console.log("interval run")
-      fetchDataWhenLoggedIn(); // Call the function on each interval
-    }, 3600000);
+    const intervalId = setInterval(fetchDataWhenLoggedIn, 3600000);
 
-    // Clean up the interval when the component unmounts or the token changes
     return () => clearInterval(intervalId);
   }, [token]);
 
   return (
     <div>
-      {!token ? (<Landing />) : (<Home logout={logout} />)}
+      {!token ? (<Landing />) : (
+        <Suspense fallback={<div>Loading...</div>}>
+          <Home logout={logout} />
+        </Suspense>
+      )}
     </div>
   );
 };

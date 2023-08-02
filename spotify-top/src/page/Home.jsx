@@ -4,12 +4,14 @@ import CurrentUser from "./CurrentUser";
 import TopArtists from "./UserTopArtists/TopArtists";
 import TopTracks from "./UserTopTracks/TopTracks";
 
-const Home = ({ logout }) => {
+const Home = ({logout}) => {
   return (
     <div>
-      <CurrentUser logout={logout} />
-      <TopArtists />
-      <TopTracks />
+      <CurrentUser logout={logout}/>
+      <div className="m-2 sm:m-5">
+        <TopArtists/>
+        <TopTracks/>
+      </div>
     </div>
   );
 };

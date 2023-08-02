@@ -40,8 +40,8 @@ const CardItem = memo(({ artist }) => {
             </ContentLoader>
           ) : (
             <img
-              className={`w-full h-full object-cover ${imageLoaded ? "opacity-100" : "opacity-0"}`}
-              src={artist.images[0]?.url || ""}
+              className={`w-[150px] h-[150px] object-cover ${imageLoaded ? "opacity-100" : "opacity-0"}`}
+              src={artist.images[1]?.url || ""}
               alt={`${artist.name || "Unknown"} picture`}
               onLoad={handleImageLoad}
               loading="lazy" // Native lazy-loading attribute

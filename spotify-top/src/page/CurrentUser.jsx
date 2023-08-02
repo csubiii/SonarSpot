@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, memo } from "react";
 import SpotifyContext from "../context/SpotifyContext";
 import ContentLoader from "react-content-loader";
 import { useInView } from "react-intersection-observer";
@@ -8,6 +8,7 @@ const CurrentUser = ({ logout }) => {
   const [loading, setLoading] = useState(true); // Local loading state
   const [ref, isVisible] = useInView({
     triggerOnce: true,
+    threshold: 0.2,
   });
 
   useEffect(() => {
@@ -40,13 +41,11 @@ const CurrentUser = ({ logout }) => {
     <div>
       <div
         ref={ref} // Attach the ref to the root element to check visibility
-        className="flex items-center justify-between bg-violet-950 rounded-b-2xl text-white px-5 py-2"
+        className="flex flex-col sm:flex-row items-center justify-between bg-violet-950 rounded-b-2xl text-white px-5 py-2"
       >
         <div className="flex items-center gap-3">
           <img
-            className="rounded-full"
-            width={40}
-            height={40}
+            className="rounded-full w-10 h-10 sm:w-10 sm:h-10"
             src={currentUser.images[0].url}
             alt="profile picture"
           />
@@ -61,7 +60,7 @@ const CurrentUser = ({ logout }) => {
         </div>
         <button
           onClick={logout}
-          className="text-red-500 text-xl hover:opacity-50 duration-150 ease-in"
+          className="text-red-500 text-xl hover:opacity-50 duration-150 ease-in mt-4 sm:mt-0"
           aria-label="Logout" // Add a descriptive label for accessibility
         >
           <svg
@@ -84,4 +83,4 @@ const CurrentUser = ({ logout }) => {
   );
 };
 
-export default CurrentUser;
+export default memo(CurrentUser);
