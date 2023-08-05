@@ -1,6 +1,6 @@
 import React from "react";
 
-import CurrentUser from "./CurrentUser";
+import CurrentUser from "../navbar/CurrentUser";
 import TopArtists from "./UserTopArtists/TopArtists";
 import TopTracks from "./UserTopTracks/TopTracks";
 

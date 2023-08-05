@@ -9,6 +9,7 @@ export const SpotifyProvider = ({ children }) => {
     currentUser: [],
     userTopArtists: [],
     userTopTracks: [],
+    playbackState: [],
     token: "",
     refreshToken: "",
   };
@@ -128,6 +129,29 @@ export const SpotifyProvider = ({ children }) => {
     }
   };
 
+  const getPlaybackState = async (token) => {
+    setLoading();
+    const { data } = await axios.get(
+      "https://api.spotify.com/v1/me/player",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    if (data) {
+      dispatch({
+        type: "GET_PLAYBACKSTATE",
+        payload: data,
+      });
+    } else {
+      console.log(
+        "Token not available. Please check Spotify Developer Settings."
+      );
+    }
+  };
+
   const setLoading = () => dispatch({ type: "SET_LOADING" });
 
   return (
@@ -138,11 +162,13 @@ export const SpotifyProvider = ({ children }) => {
         userTopTracks: state.userTopTracks,
         token: state.token,
         refreshToken: state.refreshToken,
+        playbackState: state.playbackState,
         getCurrentUser,
         getUserTopArtists,
         getToken,
         getRefresh,
         getUserTopTracks,
+        getPlaybackState,
       }}
     >
       {children}

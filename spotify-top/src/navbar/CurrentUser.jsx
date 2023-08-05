@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState, memo } from "react";
 import SpotifyContext from "../context/SpotifyContext";
 import ContentLoader from "react-content-loader";
 import { useInView } from "react-intersection-observer";
+import CurrentPlayingComponent from "./Player/CurrentPlayingComponent";
 
 const CurrentUser = ({ logout }) => {
   const { currentUser } = useContext(SpotifyContext);
@@ -41,11 +42,11 @@ const CurrentUser = ({ logout }) => {
     <div>
       <div
         ref={ref} // Attach the ref to the root element to check visibility
-        className="flex flex-col sm:flex-row items-center justify-between bg-violet-950 rounded-b-2xl text-white px-5 py-2"
+        className="flex items-center justify-between bg-violet-950 rounded-b-2xl text-white p-3 h-[90px]"
       >
         <div className="flex items-center gap-3">
           <img
-            className="rounded-full w-10 h-10 sm:w-10 sm:h-10"
+            className="rounded-full w-[40px] h-[40px] sm:w-[50px] sm:h-[50px]"
             src={currentUser.images[0].url}
             alt="profile picture"
           />
@@ -58,26 +59,31 @@ const CurrentUser = ({ logout }) => {
             {display_name}
           </a>
         </div>
-        <button
-          onClick={logout}
-          className="text-red-500 text-xl hover:opacity-50 duration-150 ease-in mt-4 sm:mt-0"
-          aria-label="Logout" // Add a descriptive label for accessibility
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-6 h-6"
+        <div className="hidden sm:flex">
+          <CurrentPlayingComponent />
+        </div>
+        <div className="flex items-center justify-center">
+          <button
+            onClick={logout}
+            className="text-red-500 text-xl hover:opacity-50 duration-150 ease-in mt-0"
+            aria-label="Logout" // Add a descriptive label for accessibility
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
-            />
-          </svg>
-        </button>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
+              />
+            </svg>
+          </button>
+        </div>
       </div>
     </div>
   );

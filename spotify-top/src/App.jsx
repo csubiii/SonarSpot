@@ -11,7 +11,7 @@ import Landing from "./page/Landing";
 const Home = lazy(() => import("./page/Home"));
 
 const App = () => {
-  const { getCurrentUser, getUserTopArtists, getUserTopTracks, getToken, token } = useContext(SpotifyContext);
+  const { getCurrentUser, getUserTopArtists, getUserTopTracks, getPlaybackState, getToken, token } = useContext(SpotifyContext);
 
   const refreshToken = localStorage.getItem("refreshToken");
 
@@ -44,22 +44,23 @@ const App = () => {
     }
   };
 
-  useEffect(() => {
-    const fetchDataWhenLoggedIn = async () => {
-      try {
-        if (!token) {
-          getToken();
-        } else {
-          await getCurrentUser(token);
-          await getUserTopArtists(token);
-          await getUserTopTracks(token);
-        }
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        refreshAccessToken();
+  const fetchDataWhenLoggedIn = async () => {
+    try {
+      if (!token) {
+        getToken();
+      } else {
+        await getCurrentUser(token);
+        await getUserTopArtists(token);
+        await getUserTopTracks(token);
+        await getPlaybackState(token);
       }
-    };
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      refreshAccessToken();
+    }
+  };
 
+  useEffect(() => {
     fetchDataWhenLoggedIn();
 
     const intervalId = setInterval(fetchDataWhenLoggedIn, 3600000);

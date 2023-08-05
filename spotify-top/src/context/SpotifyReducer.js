@@ -30,6 +30,12 @@ const spotifyReducer = (state, action) => {
         userTopTracks: action.payload,
         loading: false,
       }
+    case 'GET_PLAYBACKSTATE':
+      return {
+        ...state,
+        playbackState: action.payload,
+        loading: false,
+      }
       case 'SET_LOADING':
         return {
           ...state,
