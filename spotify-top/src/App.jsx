@@ -2,8 +2,6 @@ import React, { useContext, useEffect, useState, lazy, Suspense } from "react";
 import axios from "axios";
 import querystring from 'querystring';
 
-import './app.css'
-
 import SpotifyContext from "./context/SpotifyContext";
 
 import Landing from "./page/Landing";
