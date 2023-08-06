@@ -1,4 +1,4 @@
-import React, { memo, useState, useCallback, useEffect } from "react";
+import React, { memo, useState, useCallback } from "react";
 import { useInView } from "react-intersection-observer";
 import ContentLoader from "react-content-loader";
 
@@ -22,13 +22,12 @@ const CardItem = memo(({ track, index }) => {
   });
 
   const isLoading = !track?.album?.images?.length;
-  const [imageLoaded, setImageLoaded] = useState(false);
 
-  useEffect(() => {
-    if (inView) {
-      setImageLoaded(true);
-    }
-  }, [inView]);
+  const handleImageLoad = useCallback(() => {
+    setImageLoaded(true);
+  }, []);
+
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   const preferredImageSize = 200;
 
@@ -46,8 +45,9 @@ const CardItem = memo(({ track, index }) => {
         ) : (
           <img
             className={`w-[150px] h-[150px] object-cover ${imageLoaded ? "opacity-100" : "opacity-0"}`}
-            src={imageLoaded ? track?.album?.images?.[0]?.url || "" : ""}
+            src={track?.album?.images?.[0]?.url || ""}
             alt={`${track?.name || "Unknown"} picture`}
+            onLoad={handleImageLoad}
             loading="lazy"
             width={preferredImageSize}
             height={preferredImageSize}
