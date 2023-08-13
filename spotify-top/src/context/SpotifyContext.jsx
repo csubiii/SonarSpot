@@ -27,7 +27,7 @@ export const SpotifyProvider = ({ children }) => {
         .find((elem) => elem.startsWith("refresh_token"))
         .split("=")[1];
 
-      window.location.hash = "";
+      
       window.localStorage.setItem("refreshToken", refreshToken);
     }
 
@@ -147,7 +147,7 @@ export const SpotifyProvider = ({ children }) => {
       });
     } else {
       console.log(
-        "Token not available. Please check Spotify Developer Settings."
+        "Token not available or playback state not found."
       );
     }
   };

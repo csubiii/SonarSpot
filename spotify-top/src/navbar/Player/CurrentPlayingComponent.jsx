@@ -1,8 +1,8 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, memo } from 'react';
 import SpotifyContext from '../../context/SpotifyContext';
 import PlayingComponent from './PlayingComponent';
 
-const CurrentPlayingComponent = () => {
+const CurrentPlayingComponent = React.memo(() => {
   const { getPlaybackState, playbackState, token } = useContext(SpotifyContext);
 
   useEffect(() => {
@@ -12,7 +12,7 @@ const CurrentPlayingComponent = () => {
 
     fetchData();
 
-    const interval = setInterval(fetchData, 1000); // Fetch playback state every second
+   const interval = setInterval(fetchData, 1000); // Fetch playback state every second
 
     return () => clearInterval(interval);
   }, []);
@@ -25,6 +25,6 @@ const CurrentPlayingComponent = () => {
       {canPause && <PlayingComponent playbackState={playbackState} />}
     </div>
   );
-};
+});
 
-export default CurrentPlayingComponent;
+export default memo(CurrentPlayingComponent);

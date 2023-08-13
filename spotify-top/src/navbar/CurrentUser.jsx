@@ -60,7 +60,7 @@ const CurrentUser = ({ logout }) => {
           </a>
         </div>
         <div className="hidden sm:flex">
-          <CurrentPlayingComponent />
+         <CurrentPlayingComponent />
         </div>
         <div className="flex items-center justify-center">
           <button

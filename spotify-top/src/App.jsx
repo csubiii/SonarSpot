@@ -19,29 +19,6 @@ const App = () => {
     window.location.reload();
   };
 
-  const refreshAccessToken = async () => {
-    try {
-      const data = querystring.stringify({
-        grant_type: 'refresh_token',
-        refresh_token: refreshToken,
-        client_id: 'a85a45a07852417ab856b4d7f10b0010',
-        client_secret: import.meta.env.VITE_CLIENT_SECRET,
-      });
-
-      const response = await axios.post('https://accounts.spotify.com/api/token', data, {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-      });
-
-      const newAccessToken = response.data.access_token;
-      localStorage.setItem("token", newAccessToken); // Store the token in local storage
-      window.location.reload();
-    } catch (error) {
-      console.error('Error refreshing token:', error);
-    }
-  };
-
   const fetchDataWhenLoggedIn = async () => {
     try {
       if (!token) {
@@ -54,7 +31,7 @@ const App = () => {
       }
     } catch (error) {
       console.error('Error fetching data:', error);
-      refreshAccessToken();
+      logout();
     }
   };
 

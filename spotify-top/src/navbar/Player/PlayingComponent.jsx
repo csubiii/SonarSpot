@@ -1,5 +1,24 @@
 import React, { useEffect, useState } from 'react';
 
+const ArtistName = React.memo(({ artist }) => (
+  <a
+    href={artist.external_urls.spotify}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="text-purple-500 hover:underline"
+  >
+    {artist.name}
+  </a>
+));
+
+const formatTime = (milliseconds) => {
+  const totalSeconds = Math.floor(milliseconds / 1000);
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+
+  return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+};
+
 const PlayingComponent = ({ playbackState }) => {
   const [currentTime, setCurrentTime] = useState(playbackState?.progress_ms || 0);
 
@@ -23,14 +42,6 @@ const PlayingComponent = ({ playbackState }) => {
     }
   }, [playbackState?.progress_ms]);
 
-  const formatTime = (milliseconds) => {
-    const totalSeconds = Math.floor(milliseconds / 1000);
-    const minutes = Math.floor(totalSeconds / 60);
-    const seconds = totalSeconds % 60;
-
-    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-  };
-
   if (!playbackState?.is_playing || !playbackState?.item) {
     return null;
   }
@@ -38,16 +49,10 @@ const PlayingComponent = ({ playbackState }) => {
   const { album, external_urls, name, duration_ms, artists } = playbackState.item;
 
   const artistNames = artists.map(artist => (
-    <a
-      key={artist.id}
-      href={artist.external_urls.spotify}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="text-purple-500 hover:underline"
-    >
-      {artist.name}
-    </a>
+    <ArtistName key={artist.id} artist={artist} />
   ));
+
+  const progressBarWidth = `${(currentTime / (duration_ms || 1)) * 100}%`;
 
   return (
     <div className="bg-gray-900 p-3 py-2 rounded-lg w-96 h-auto flex items-center">
@@ -70,7 +75,7 @@ const PlayingComponent = ({ playbackState }) => {
         <div className="flex items-center mt-1">
           <div className="flex-grow">
             <div className="bg-gray-800 h-1 rounded-full">
-              <div className="bg-purple-500 h-1 rounded-full" style={{ width: `${(currentTime / (duration_ms || 1)) * 100}%` }}></div>
+              <div className="bg-purple-500 h-1 rounded-full" style={{ width: progressBarWidth }}></div>
             </div>
           </div>
           <span className="text-gray-400 text-xs ml-2">
